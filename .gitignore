@@ -1,0 +1,12 @@
+# dependencies
+diffusers-0.13.0
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# MacOS
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# debugging files
