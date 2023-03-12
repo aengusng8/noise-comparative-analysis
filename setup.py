@@ -31,12 +31,16 @@ def move_new_pipeline_to_diffusers():
             "noise_comparative_analysis/latent_diffusion_noise_comparative_analysis.py",
             "diffusers-0.13.0/examples/community/",
         ),
+        (
+            "noise_comparative_analysis/ddim_noise_comparative_analysis.py",
+            "diffusers-0.13.0/examples/community/",
+        ),
     ]
 
     for source, destination in source2destination:
         os.system(f"cp {source} {destination}")
 
-    print("Successfully move the new pipeline to diffusers")
+    print(f"Successfully move the {len(source2destination)} new pipelines to diffusers")
 
 
 if __name__ == "__main__":
