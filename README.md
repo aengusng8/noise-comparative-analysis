@@ -1,5 +1,7 @@
 # noise-comparative-analysis
 This repository is to implement and extend the second contribution of [Perception Prioritized Training of Diffusion Models](https://arxiv.org/abs/2204.00227) paper by investigating diverse diffusion models and datasets.
+- models: DDPM/DDIM, LDM (latent diffusion model)
+- datasets: CelebA-HQ, FFHQ
 
 ## Results
 Given a input image, we start denoising them at different noise step.
