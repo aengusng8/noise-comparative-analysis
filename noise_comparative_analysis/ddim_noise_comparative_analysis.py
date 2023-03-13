@@ -23,6 +23,7 @@ from diffusers.schedulers import DDIMScheduler
 from diffusers.utils import randn_tensor, deprecate, PIL_INTERPOLATION
 from diffusers.pipeline_utils import DiffusionPipeline, ImagePipelineOutput
 
+
 trans = transforms.Compose(
     [
         transforms.Resize((256, 256)),
@@ -30,6 +31,8 @@ trans = transforms.Compose(
         transforms.Normalize([0.5], [0.5]),
     ]
 )
+
+
 def preprocess(image):
     if isinstance(image, torch.Tensor):
         return image
@@ -39,6 +42,7 @@ def preprocess(image):
     image = [trans(img.convert("RGB")) for img in image]
     image = torch.stack(image)
     return image
+
 
 class DDIMNoiseComparativeAnalysisPipeline(DiffusionPipeline):
     r"""
@@ -65,7 +69,7 @@ class DDIMNoiseComparativeAnalysisPipeline(DiffusionPipeline):
             raise ValueError(
                 f"The value of strength should in [0.0, 1.0] but is {strength}"
             )
-        
+
     def get_timesteps(self, num_inference_steps, strength, device):
         # get the original timestep using init_timestep
         init_timestep = min(int(num_inference_steps * strength), num_inference_steps)
@@ -74,7 +78,7 @@ class DDIMNoiseComparativeAnalysisPipeline(DiffusionPipeline):
         timesteps = self.scheduler.timesteps[t_start:]
 
         return timesteps, num_inference_steps - t_start
-    
+
     def prepare_latents(
         self, image, timestep, batch_size, dtype, device, generator=None
     ):
@@ -100,7 +104,7 @@ class DDIMNoiseComparativeAnalysisPipeline(DiffusionPipeline):
         latents = init_latents
 
         return latents
-        
+
     @torch.no_grad()
     def __call__(
         self,
@@ -167,7 +171,6 @@ class DDIMNoiseComparativeAnalysisPipeline(DiffusionPipeline):
         )
         image = latents
 
-
         for t in self.progress_bar(timesteps):
             # 1. predict noise model_output
             model_output = self.unet(image, t).sample
@@ -176,7 +179,12 @@ class DDIMNoiseComparativeAnalysisPipeline(DiffusionPipeline):
             # eta corresponds to η in paper and should be between [0, 1]
             # do x_t -> x_t-1
             image = self.scheduler.step(
-                model_output, t, image, eta=eta, use_clipped_model_output=use_clipped_model_output, generator=generator
+                model_output,
+                t,
+                image,
+                eta=eta,
+                use_clipped_model_output=use_clipped_model_output,
+                generator=generator,
             ).prev_sample
 
         image = (image / 2 + 0.5).clamp(0, 1)
@@ -185,6 +193,6 @@ class DDIMNoiseComparativeAnalysisPipeline(DiffusionPipeline):
             image = self.numpy_to_pil(image)
 
         if not return_dict:
-            return (image,)
+            return (image, latent_timestep.item())
 
         return ImagePipelineOutput(images=image)
