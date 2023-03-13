@@ -1,5 +1,5 @@
-# Noise steps in Diffusion Probabilistic Models: A Comparative Analysis
-This repository ...
+# noise-comparative-analysis
+This repository is to implement and extend the second contribution of [Perception Prioritized Training of Diffusion Models](https://arxiv.org/abs/2204.00227) paper by investigating diverse diffusion models and datasets.
 
 ## Results
 Given a input image, we start denoising them at different noise step.
@@ -26,4 +26,5 @@ python run_noise_comparative_analysis.py
 ```
 
 ## Acknowledgments
-Thanks to Choi et al for releasing their paper [Perception Prioritized Training of Diffusion Models](https://arxiv.org/abs/2204.00227).
+- Thanks to Choi et al for releasing their paper [Perception Prioritized Training of Diffusion Models](https://arxiv.org/abs/2204.00227). 
+- This repository is based on [huggingface/diffusers](https://github.com/huggingface/diffusers).
