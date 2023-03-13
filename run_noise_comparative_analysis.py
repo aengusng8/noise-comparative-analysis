@@ -2,6 +2,7 @@ import torch
 from PIL import Image
 import argparse
 import os
+import numpy as np
 
 
 from diffusers import DiffusionPipeline
@@ -13,10 +14,12 @@ CONFIG = {
     "ddim": {
         "model_id": "google/ddpm-ema-celebahq-256",
         "custom_pipeline": "diffusers-0.13.0/examples/community/ddim_noise_comparative_analysis.py",
+        "num_inference_steps": 50,
     },
     "latent_diffusion": {
         "model_id": "CompVis/ldm-celebahq-256",
         "custom_pipeline": "diffusers-0.13.0/examples/community/latent_diffusion_noise_comparative_analysis.py",
+        "num_inference_steps": 200,
     },
 }
 
@@ -37,13 +40,16 @@ def main(latent_diffusion=False):
         # torch_dtype=torch.float16,
     ).to(device)
 
-    strengths = [x / 10.0 for x in range(1, 10, 1)]
-    print("strengths", strengths)
-    for strength in strengths:
+    for strength in np.linspace(0.1, 1, 25):
         # TODO: delete this for-loop
-        for image in images:
-            denoised_image = pipe(image[0], strength=strength).images[0]
-            denoised_image.save(f"result/{pipeline_name}_{image[1]}_{strength}.png")
+        for image, image_name in images[:1]:
+            denoised_image, latent_timestep = pipe(
+                image, strength=strength, return_dict=False
+            )
+            denoised_image = denoised_image[0]
+            denoised_image.save(
+                f"result/{pipeline_name}_{image_name}_{latent_timestep}.png"
+            )
 
 
 if __name__ == "__main__":
