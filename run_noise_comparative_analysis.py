@@ -42,7 +42,7 @@ def main(latent_diffusion=False):
 
     for strength in np.linspace(0.1, 1, 25):
         # TODO: delete this for-loop
-        for image, image_name in images[:1]:
+        for image, image_name in images:
             denoised_image, latent_timestep = pipe(
                 image, strength=strength, return_dict=False
             )
