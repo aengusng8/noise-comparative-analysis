@@ -2,7 +2,7 @@
 
 ### **Question: What visual concepts do the diffusion models learn from each noise level during training?**
 
-The [P2 weighting (CVPR 2022)](https://arxiv.org/abs/2204.00227) paper proposed an approach to answer the above question, which is their second contribution. According to the paper:
+The [P2 weighting (CVPR 2022)](https://arxiv.org/abs/2204.00227) paper proposed an approach to answer this question, which is their second contribution. According to the paper:
 - When SNR is high, the model will learn only imperceptible details by solving recovery tasks.
 - When SNR is low, the model will learn perceptually rich contents by solving recovery tasks.
 
