@@ -1,5 +1,5 @@
 # noise-comparative-analysis
-
+*Part of this repository is merged into huggingface🤗/diffusers🧨  [[1*]](https://github.com/huggingface/diffusers/pull/2665) [[2*]](https://github.com/huggingface/diffusers/tree/main/examples/community#ddim-noise-comparative-analysis-pipeline)*
 ### **Question: What visual concepts do the diffusion models learn from each noise level during training?**
 
 The [P2 weighting (CVPR 2022)](https://arxiv.org/abs/2204.00227) paper proposed an approach to answer this question, which is their second contribution. According to the paper:
